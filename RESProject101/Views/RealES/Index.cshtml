@@ -1,0 +1,155 @@
+﻿ 
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using Data.ViewModels.DataRESVM
+@model IEnumerable<Data.ViewModels.DataRESVM.CardVm>
+
+@{
+    ViewData["Title"] = "Index";
+
+}
+
+
+
+<head>
+    <meta charset="utf-8">
+    <title>NewVilla - Listing Page</title>
+    <meta name="description" content="Morden Bootstrap HTML5 Template">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
+
+    <!-- ======= All CSS Plugins here ======== -->
+    <link rel="stylesheet" href="assets/css/plugins/swiper-bundle.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+
+    <!-- Plugin css -->
+    <link rel="stylesheet" href="assets/css/vendor/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/plugins/swiper-bundle.min.css">
+    <link rel="stylesheet" href="assets/css/plugins/glightbox.min.css">
+    <link rel="stylesheet" href="assets/css/plugins/aos.css">
+
+    <!-- Custom Style CSS -->
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/rtl.css">
+
+</head>
+
+<body>
+    <!-- Preloader start -->
+    <div id="preloader">
+        <div class="loader--border"></div>
+    </div>
+    <!-- Preloader end -->
+
+  
+
+        <!-- Breadcrumb section -->
+        <section class="breadcrumb__section section--padding">
+            <div class="container">
+                <div class="breadcrumb__content text-center">
+                    <h1 class="breadcrumb__title h2"><span>Listing</span> Page</h1>
+                    <ul class="breadcrumb__menu d-flex justify-content-center">
+                        <li class="breadcrumb__menu--items"><a class="breadcrumb__menu--link" href="./index.html">Home</a></li>
+                        <li>
+                            <span>
+                                <svg width="6" height="10" viewBox="0 0 6 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M5.22321 4.65179C5.28274 4.71131 5.3125 4.77976 5.3125 4.85714C5.3125 4.93452 5.28274 5.00298 5.22321 5.0625L1.0625 9.22321C1.00298 9.28274 0.934524 9.3125 0.857143 9.3125C0.779762 9.3125 0.71131 9.28274 0.651786 9.22321L0.205357 8.77679C0.145833 8.71726 0.116071 8.64881 0.116071 8.57143C0.116071 8.49405 0.145833 8.4256 0.205357 8.36607L3.71429 4.85714L0.205357 1.34821C0.145833 1.28869 0.116071 1.22024 0.116071 1.14286C0.116071 1.06548 0.145833 0.997023 0.205357 0.9375L0.651786 0.491071C0.71131 0.431547 0.779762 0.401785 0.857143 0.401785C0.934524 0.401785 1.00298 0.431547 1.0625 0.491071L5.22321 4.65179Z" fill="#706C6C" />
+                                </svg>
+                            </span>
+                        </li>
+                        <li><span class="breadcrumb__menu--text">Listing Right Sidebar </span></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        <!-- Breadcrumb section .\ -->
+        <!-- Listing page section -->
+        <section class="listing__page--section section--padding">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="listing__page--wrapper">
+                            <div class="listing__header d-flex justify-content-between align-items-center">
+                                <div class="listing__header--left">
+                                    <p class="results__cout--text">Showing 12 of 21 Results</p>
+                                </div>
+                                <div class="listing__header--right d-flex align-items-center">
+                                    <div class="recently__select d-flex align-items-center">
+                                        <span class="recently__select--icon">
+                                            <svg width="14" height="13" viewBox="0 0 14 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path fill-rule="evenodd" clip-rule="evenodd" d="M7.42426 9.76048L10.1339 12.6088C10.3985 12.8869 10.8273 12.8869 11.0919 12.6088L13.8016 9.76048C14.0661 9.48239 14.0661 9.03159 13.8016 8.7535C13.537 8.47541 13.1082 8.47541 12.8436 8.7535L11.2903 10.3862V0.712076C11.2903 0.318811 10.987 0 10.6129 0C10.2388 0 9.9355 0.318811 9.9355 0.712076V10.3862L8.38222 8.7535C8.11766 8.47541 7.68881 8.47541 7.42426 8.7535C7.1597 9.03159 7.1597 9.48239 7.42426 9.76048ZM3.86611 0.208562C3.60156 -0.0695178 3.17264 -0.0695178 2.90809 0.208562L0.19841 3.05687C-0.0661366 3.33495 -0.0661366 3.78581 0.19841 4.06389C0.462956 4.34197 0.891881 4.34197 1.15643 4.06389L2.70968 2.43118V12.1053C2.70968 12.4985 3.01297 12.8174 3.3871 12.8174C3.76123 12.8174 4.06452 12.4985 4.06452 12.1053V2.43118L5.6178 4.06389C5.88236 4.34197 6.31121 4.34197 6.57576 4.06389C6.84032 3.78581 6.84032 3.33495 6.57576 3.05687L3.86611 0.208562Z" fill="currentColor" />
+                                            </svg>
+                                        </span>
+                                        <div class="select">
+                                            <select>
+                                                <option selected value="1">Recently Added</option>
+                                                <option value="2">Newest</option>
+                                                <option value="3">Best Seller</option>
+                                                <option value="4">Best Match</option>
+                                                <option value="5">Price Low</option>
+                                                <option value="6">Price High</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <ul class="nav listing__tab--btn">
+                                        
+                                        
+                                    </ul>
+                                </div>
+                            </div>
+                            @if (Model.FirstOrDefault().Title == null)
+                            {
+                                <partial name="NotFoundPartial" />
+                            }
+                            else
+                            {
+                                
+                                <partial name="cardsPartial" model="Model" />
+                            }
+
+                        </div>
+                    </div>
+                    @*
+                        Filtering Lines of code
+                    *@
+                    <div class="col-lg-4">
+                        <div class="listing__widget">
+                            <div class="widget__search mb-30">
+                                <div class="widget__search--input position-relative">
+                                    <input class="widget__search--input__field" placeholder="Search product" type="text">
+                                    <button class="widget__search--btn">
+                                        <svg width="16" height="17" viewBox="0 0 15 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M9.10714 9.54464C9.89286 8.75893 10.2857 7.81548 10.2857 6.71429C10.2857 5.61309 9.89286 4.67262 9.10714 3.89286C8.32738 3.10714 7.38691 2.71428 6.28571 2.71428C5.18452 2.71428 4.24107 3.10714 3.45536 3.89286C2.6756 4.67262 2.28571 5.61309 2.28571 6.71429C2.28571 7.81548 2.6756 8.75893 3.45536 9.54464C4.24107 10.3244 5.18452 10.7143 6.28571 10.7143C7.38691 10.7143 8.32738 10.3244 9.10714 9.54464ZM14.8571 14.1429C14.8571 14.4524 14.744 14.7202 14.5179 14.9464C14.2917 15.1726 14.0238 15.2857 13.7143 15.2857C13.3929 15.2857 13.125 15.1726 12.9107 14.9464L9.84822 11.8929C8.78274 12.631 7.59524 13 6.28571 13C5.43452 13 4.61905 12.8363 3.83929 12.5089C3.06548 12.1756 2.39583 11.7292 1.83036 11.1696C1.27083 10.6042 0.824405 9.93452 0.491071 9.16071C0.16369 8.38095 0 7.56548 0 6.71429C0 5.86309 0.16369 5.05059 0.491071 4.27678C0.824405 3.49702 1.27083 2.82738 1.83036 2.26786C2.39583 1.70238 3.06548 1.25595 3.83929 0.928571C4.61905 0.595237 5.43452 0.428571 6.28571 0.428571C7.13691 0.428571 7.94941 0.595237 8.72322 0.928571C9.50298 1.25595 10.1726 1.70238 10.7321 2.26786C11.2976 2.82738 11.744 3.49702 12.0714 4.27678C12.4048 5.05059 12.5714 5.86309 12.5714 6.71429C12.5714 8.02381 12.2024 9.21131 11.4643 10.2768L14.5268 13.3393C14.747 13.5595 14.8571 13.8274 14.8571 14.1429Z" fill="currentColor" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                            <partial name="Filtering" model="new FilterVm{Categories = Model.FirstOrDefault().Categories,Feature = Model.FirstOrDefault().Features}"></partial>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Listing page section . -->
+    
+
+ 
+
+
+    <!-- Scroll top bar -->
+    <button id="scroll__top"><svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="48" d="M112 244l144-144 144 144M256 120v292" /></svg></button>
+
+    <!-- All Script JS Plugins here  -->
+    <script src="assets/js/vendor/popper.js" defer="defer"></script>
+    <script src="assets/js/vendor/bootstrap.min.js" defer="defer"></script>
+    <script src="assets/js/plugins/swiper-bundle.min.js"></script>
+    <script src="assets/js/plugins/glightbox.min.js"></script>
+    <script src="assets/js/plugins/aos.js"></script>
+
+
+    <!-- Customscript js -->
+    <script src="assets/js/script.js"></script>
+
+
+
+</body>

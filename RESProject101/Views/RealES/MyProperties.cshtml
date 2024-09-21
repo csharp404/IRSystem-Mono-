@@ -1,0 +1,80 @@
+﻿@model IEnumerable<Data.ViewModels.DataRESVM.FavVm>
+@{
+    Layout = "_Dashboard";
+}
+
+
+<!-- dashboard container -->
+<div class="dashboard__container dashboard__reviews--container">
+    <div class="reviews__heading mb-30">
+        <h2 class="reviews__heading--title">My Properties</h2>
+        <p class="reviews__heading--desc">We are glad to see you again!</p>
+    </div>
+    <div class="properties__wrapper">
+        <div class="properties__table table-responsive">
+            <table class="properties__table--wrapper">
+                <thead>
+                    <tr>
+                        <th>Listing Title</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                <div class="properties__author d-flex align-items-center">
+                                    <div class="properties__author--thumb">
+                                        <img src="~/Images/RealESImages/@item.ImageName" alt="img" width="64px" height="64px">
+                                    </div>
+                                    <div class="reviews__author--text">
+                                        <h3 class="reviews__author--title">@item.Title</h3>
+                                        <p class="reviews__author--subtitle">@item.Country, @item.City, @item.Hood</p>
+                                        <span class="properties__author--price">$@item.Price</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="reviews__action--wrapper position-relative">
+
+
+                                    <a asp-action="RemoveitFavoriteDashboard" asp-controller="RealES" asp-route-id="@item.RealId">Remove</a> |
+                                    <a asp-action="Update" asp-controller="RealES" asp-route-id="@item.RealId">Edit</a>
+
+                                </div>
+                            </td>
+                        </tr>
+
+                    }
+
+                </tbody>
+            </table>
+        </div>
+        @*
+        Pagination
+        *@
+        <!-- Pagination controls -->
+        <nav aria-label="Page navigation">
+            <ul class="pagination">
+                <li class="page-item @(ViewBag.CurrentPage == 1 ? "disabled" : "")">
+                    <a class="page-link" href="@Url.Action("Index", new { page = ViewBag.CurrentPage - 1 })" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                @for (int i = 1; i <= ViewBag.TotalPages; i++)
+                {
+                    <li class="page-item @(ViewBag.CurrentPage == i ? "active" : "")">
+                        <a class="page-link" href="@Url.Action("Index", new { page = i })">@i</a>
+                    </li>
+                }
+                <li class="page-item @(ViewBag.CurrentPage == ViewBag.TotalPages ? "disabled" : "")">
+                    <a class="page-link" href="@Url.Action("Index", new { page = ViewBag.CurrentPage + 1 })" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+</div>
+<script src="~/DbAssets/js/script.js"></script>

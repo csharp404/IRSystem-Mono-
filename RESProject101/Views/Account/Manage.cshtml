@@ -1,0 +1,175 @@
+﻿@using Data.ViewModels.DataUserVM
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model Data.ViewModels.DataUserVM.ManageProfileVm
+
+@{
+    ViewData["Title"] = "Manage";
+    Layout = "_Dashboard";
+}
+
+
+
+@if (Model.ValidationMessage != null)
+{
+    <div id="myToast" style=" position: relative;
+    top: 7rem;
+    right: 0rem;
+font-size:medium;
+color:black;
+    z-index: 1050;" class="toast position-absolute p-0 text-black rounded-4" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header bg-danger m-0">
+            <strong class="me-auto " style="color: black">Alert</strong>
+            <small class="text-light">@DateTime.Now.ToShortTimeString()</small>
+            <button type="button" class="btn-close ms-2 mb-1" data-bs-dismiss="toast" aria-label="Close">
+                <span aria-hidden="true"></span>
+            </button>
+        </div>
+        <div class="toast-body ">
+            @Model.ValidationMessage
+        </div>
+    </div>
+
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var toastEl = document.getElementById('myToast');
+            var toast = new bootstrap.Toast(toastEl);
+
+
+            toast.show();
+            setTimeout(function () {
+                toast.hide();
+            }, 5000);
+        });
+    </script>
+}
+
+
+
+
+
+
+<!-- dashboard container -->
+<div class="dashboard__container setting__container">
+    <div class="add__property--heading mb-30">
+        <h2 class="add__property--heading__title">Settings Page</h2>
+        <p class="add__property--desc">We are glad to see you again!</p>
+    </div>
+    <form asp-action="Manage" asp-controller="Account">
+
+
+        <div class="setting__page--inner d-flex justify-content-center col-lg-12">
+
+            <div class="setting__profile edit-profile">
+                <div class="edit__profile--step">
+                    <h3 class="setting__profile--title">Edit Profile</h3>
+                    <div class="setting__profile--inner">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6">
+                                <div class="add__listing--input__box mb-20">
+                                    <label class="add__listing--input__label" asp-for="FirstName">First Name</label>
+                                    <input class="add__listing--input__field" id="FirstName" placeholder="First Name" asp-for="FirstName" type="text">
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6">
+                                <div class="add__listing--input__box mb-20">
+                                    <label class="add__listing--input__label" asp-for="LastName">Last Name</label>
+                                    <input class="add__listing--input__field" asp-for="LastName" id="LastName" placeholder="Last Name" type="text">
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="edit__profile--step">
+                    <h3 class="setting__profile--title">Personal information :</h3>
+                    <div class="setting__profile--inner">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6">
+                                <div class="add__listing--input__box mb-20" style="opacity:0.25 !important;">
+                                    <label class="add__listing--input__label" 
+                                           asp-for="Email">Email Address :</label>
+                                    <input class="add__listing--input__field" id="Email" asp-for="Email" readonly placeholder="Email Address" type="email">
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6">
+                                <div class="add__listing--input__box mb-20">
+                                    <label class="add__listing--input__label" asp-for="PhoneNumber">Contact Details :</label>
+                                    <input class="add__listing--input__field" asp-for="PhoneNumber" id="PhoneNumber" placeholder="Contact Details " type="text">
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6">
+                                <div class="add__listing--input__box mb-20">
+                                    <label class="add__listing--input__label" asp-for="Country">Country :</label>
+                                    <input class="add__listing--input__field" asp-for="Country" id="PhoneNumber" placeholder="Country " type="text">
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6">
+                                <div class="add__listing--input__box mb-20">
+                                    <label class="add__listing--input__label" asp-for="City">City :</label>
+                                    <input class="add__listing--input__field" asp-for="City" id="PhoneNumber" placeholder="City " type="text">
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="add__listing--textarea__box mb-15">
+                                    <label class="add__listing--input__label" asp-for="Bio">My Bio</label>
+                                    <textarea class="add__listing--textarea__field" asp-for="Bio" id="Bio" placeholder="Enter About description"></textarea>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="edit__profile--button d-flex justify-content-around">
+
+                            @*
+                            Add Change Password and Disable Account
+                            *@
+
+
+
+
+                            <button type="submit" class="edit__profile--update__btn solid__btn">Update Profile</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </form>
+
+    <div class="setting__page--inner d-flex justify-content-center col-lg-12">
+
+        <div class="setting__profile edit-profile">
+            <div class="edit__profile--step">
+                <div class="setting__profile--inner">
+                    <div class="edit__profile--button d-flex justify-content-around">
+                            <partial name="_partialChangePw" model="new CheckPwVm(){}">
+
+                            <partial name="Delete" model="new ManageProfileVm{}">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- dashboard container .\ -->
+<!-- Start footer section
+<!-- End footer section -->
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        $(document).ready(function () {
+            $('#file').on('change', function () {
+                $('#pr').attr('src', window.URL.createObjectURL(this.files[0]));
+            });
+        });
+    </script>
+}
+
+

@@ -103,7 +103,7 @@
   
             
             $.ajax({
-                url: "https://localhost:7091/RealES/GetAllCountry",
+                url: "/RealES/GetAllCountry",
                 type: "GET",
                 success: function (response) {
                     $("#cities").empty();
@@ -122,7 +122,7 @@
         $('#Country').on('change', function () {
             var countryid = $(this).val(); // Get the selected country ID from the dropdown
             $.ajax({
-                url: "https://localhost:7091/RealES/GetCities?id=" + countryid,
+                url: "/RealES/GetCities?id=" + countryid,
                 type: "GET",
                 success: function (response) {
                     $("#cities").empty();
@@ -141,7 +141,7 @@
         $('#cities').on('change', function () {
             var cityid = $(this).val(); // Get the selected country ID from the dropdown
             $.ajax({
-                url: "https://localhost:7091/RealES/GetHoods?id=" + cityid,
+                url: "/RealES/GetHoods?id=" + cityid,
                 type: "GET",
                 success: function (response) {
                     $("#hoods").empty(); // Clear existing options

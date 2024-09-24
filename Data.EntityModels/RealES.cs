@@ -20,7 +20,7 @@ namespace Data.EntityModels
 
         [ForeignKey("AddressID")]
         public string? AddressId { get; set; }
-        public Address Address { get; set; }
+        public Address? Address { get; set; }
 
         public ICollection<RealEsFeature>? RealEsFeatures { get; set; }
         public ICollection<RealEsService>? RealEsServices { get; set; }
@@ -29,10 +29,10 @@ namespace Data.EntityModels
         public ICollection<RealEsImages>? Images{ get; set; }
         public int Views {  get; set; } =0;
         public string? RoomId { get; set; }
-        public Room Room { get; set; }
+        public Room? Room { get; set; }
 
         public string CategoryId { get; set; }
-        public Category Category { get; set; }
+        public Category? Category { get; set; }
 
       public DateTime CreatedAt { get; set; } = DateTime.Now;
     }

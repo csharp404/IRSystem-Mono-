@@ -23,14 +23,14 @@ namespace Business.BusinessLayer.BRealES.Repository
             _mapper = map;
             this._db = db;
         }
-        public string Create(CreateVm room, string realId)
+        public Room Create(CreateVm room, string realId)
         {
             Room rom = _mapper.Map<Room>(room);
             rom.RealEsId = realId;
             rom.RoomId = Guid.NewGuid().ToString();
             _db.Rooms.Add(rom);
             _db.SaveChanges();
-            return rom.RoomId;
+            return rom;
 
         }
 

@@ -21,5 +21,6 @@ namespace Data.ViewModels.DataRESVM
        public List<SelectionFeatures> Categories { get; set; }
         public List<SelectionFeatures> Features { get; set; } 
         public bool IsFav { get; set; } = false;
+        
     }
 }

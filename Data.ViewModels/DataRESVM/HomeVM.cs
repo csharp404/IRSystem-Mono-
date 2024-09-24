@@ -1,4 +1,6 @@
 ﻿
+using Microsoft.AspNetCore.Mvc.Rendering;
+
 namespace Data.ViewModels.DataRESVM
 {
     public sealed record class HomeVm
@@ -9,6 +11,8 @@ namespace Data.ViewModels.DataRESVM
         public string? CategoryId { set; get; }    
         public string? PlaceCountry { set; get; }    
         public string? Price { set; get; }
+
         public List<SelectionFeatures> Categories { get; set; }
+        public List<SelectListItem> Countries { get; set; }
     }
 }

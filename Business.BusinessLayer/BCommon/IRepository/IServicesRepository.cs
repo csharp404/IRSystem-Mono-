@@ -25,7 +25,7 @@ namespace Business.BusinessLayer.BCommon.IRepository
         public List<Country> GetCountries();
         public Task<List<City>> GetCities(string id);
         public List<Hood> GetHoods(string id);
-        public bool UploadImgPropery(List<IFormFile> images, string realEsid);
+        public Task<bool> UploadImgPropery(List<IFormFile> images, string realEsid);
 
 
         public bool RemoveImagesPropery(string userId);

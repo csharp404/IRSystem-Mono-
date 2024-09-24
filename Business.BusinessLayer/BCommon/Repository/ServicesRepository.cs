@@ -79,16 +79,16 @@ namespace Business.BusinessLayer.BCommon.Repository
             return data;
         }
 
+       
 
-
-        public bool UploadImgPropery(List<IFormFile> images, string realEsid)
+        public async Task<bool> UploadImgPropery(List<IFormFile> images, string realEsid)
         {
             List<RealEsImages> image = new List<RealEsImages>();
             foreach (var item in images)
             {
                 var guid = Guid.NewGuid().ToString();
 
-                var path = Path.Combine("Images/RealESImages", guid + item.FileName);
+                var path = Path.Combine("C:\\Users\\USER\\source\\repos\\IRSystem\\RESProject101\\wwwroot\\", "Images\\RealESImages", guid + item.FileName);
 
                 using (var stream = new FileStream(path, FileMode.Create))
                 {
@@ -104,8 +104,8 @@ namespace Business.BusinessLayer.BCommon.Repository
                    }
                 );
             }
-            _db.RealEsImages.AddRange(image);
-            _db.SaveChanges();
+          await  _db.RealEsImages.AddRangeAsync(image);
+           await _db.SaveChangesAsync();
             return true;
         }
 

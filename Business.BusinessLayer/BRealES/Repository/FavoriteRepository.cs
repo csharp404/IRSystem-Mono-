@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 using AutoMapper;
 using Business.BusinessLayer.BRealES.IRepository;
 using Business.BusinessLayer.BUser.IRepository;
 using Data.DataLayer;
 using Data.EntityModels;
 using Data.ViewModels.DataRESVM;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Business.BusinessLayer.BRealES.Repository
@@ -17,42 +14,53 @@ namespace Business.BusinessLayer.BRealES.Repository
     {
         private readonly IMapper _mapper;
         private readonly IUserRepository _userRepository;
-        private readonly MyDbContext _db;
-        public FavoriteRepository(IMapper map, IUserRepository userRepository, MyDbContext context)
+        private readonly MyDbContext ndb;
+        public FavoriteRepository(IMapper map, IUserRepository userRepository, MyDbContext con)
         {
             _mapper = map;
-            this._userRepository = userRepository;
-            this._db = context;
+            _userRepository = userRepository;
+            ndb = con;
         }
-        public bool AddFavorite(string id)
+        public async Task<bool> AddFavorite(string id)
         {
-            var userId = _userRepository.GetCurrentUser().Id;
-            var check = _db.Favorites.AsNoTracking().Where(x => x.UserId == userId && x.RealEsid == id).ToList();
-            if (check.Count > 0)
+            try
             {
-                return RemoveRealEs(id);
-            }
-            var fav = new Favorite
+                var userId =(User) await _userRepository.GetCurrentUser();
+               
+                var check = await ndb.Favorites.AsNoTracking().Where(x => x.UserId == userId.Id && x.RealEsid == id).FirstAsync();
+                
+                if (check!=null)
                 {
-                    RealEsid = id,
-                    UserId = userId
+                    return await RemoveRealEs(id);
                 }
-                ;
-            _db.Favorites.Add(fav);
-            _db.SaveChanges();
-            return true;
+
+                var fav = new Favorite
+                    {
+                        RealEsid = id,
+                        UserId = userId.Id
+                    }
+                    ;
+                await ndb.Favorites.AddAsync(fav);
+                await ndb.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
         }
 
         public List<FavVm> GetFavoriteByUserId()
         {
-            var userId = _userRepository.GetCurrentUser().Id;
+            var userId = _userRepository.GetCurrentUser().Result;
 
-            var favs = _db.Favorites
-                .Where(x => x.UserId == userId)
+            var favs = ndb.Favorites
+                .Where(x => x.UserId == userId.Id)
                 .Select(x => x.RealEsid)
                 .ToList();
 
-            var realEs = _db.RealEs
+            var realEs = ndb.RealEs
                 .Include(x => x.Favorites)
                 .Include(x => x.Images)
                 .Include(x => x.Address)
@@ -66,17 +74,17 @@ namespace Business.BusinessLayer.BRealES.Repository
             return data;
         }
 
-        public bool RemoveRealEs(string id)
+        public async Task<bool> RemoveRealEs(string id)
         {
-            var userId = _userRepository.GetCurrentUser().Id;
+            var userId = _userRepository.GetCurrentUser().Result;
             var fav = new Favorite
                 {
                     RealEsid = id,
-                    UserId = userId
+                    UserId = userId.Id
                 }
                 ;
-            _db.Favorites.Remove(fav);
-            _db.SaveChanges();
+            ndb.Favorites.Remove(fav);
+           await ndb.SaveChangesAsync();
             return true;
         }
     }

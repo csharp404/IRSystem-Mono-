@@ -1,16 +1,13 @@
 ﻿using Business.BusinessLayer.BUser.IRepository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Mime;
-using System.Text;
-using System.Threading.Tasks;
+
 using System.Web.Mvc;
 using AutoMapper;
 using Data.EntityModels;
 using Data.ViewModels.DataUserVM;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+
 
 namespace Business.BusinessLayer.BUser.Repository
 {
@@ -67,7 +64,7 @@ namespace Business.BusinessLayer.BUser.Repository
         }
         public bool ChangePwd(CheckPwVm pw)
         {
-            var getUser = (User)GetCurrentUser();
+            var getUser = (User)GetCurrentUser().Result;
             var check = UserManager.CheckPasswordAsync(getUser, pw.CurrentPassword).Result;
             if (check)
             {
@@ -79,7 +76,7 @@ namespace Business.BusinessLayer.BUser.Repository
         }
         public bool DisableAccount(ManageProfileVm profile)
         {
-            var getUser = GetCurrentUser();
+            var getUser = GetCurrentUser().Result;
             var check = UserManager.CheckPasswordAsync(getUser, profile.Password).Result;
 
             if (check)
@@ -96,10 +93,19 @@ namespace Business.BusinessLayer.BUser.Repository
             return false;
         }
         [Authorize]
-        public IdentityUser GetCurrentUser()
+        public async Task<IdentityUser> GetCurrentUser()
         {
-            var userId = UserManager.GetUserAsync(ContextAccessor.HttpContext.User).Result;
-            return userId;
+            try
+            {
+                var userId =  UserManager.GetUserAsync(ContextAccessor.HttpContext.User).Result;
+                return userId;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+         
         }
         public bool UpadateAccount(ManageProfileVm profile)
         {
@@ -120,13 +126,13 @@ namespace Business.BusinessLayer.BUser.Repository
         }
         public ManageProfileVm GetUsrInfo()
         {
-            User resp = (User)GetCurrentUser();
+            User resp = (User)GetCurrentUser().Result;
             var data = Mapper.Map<ManageProfileVm>(resp);
             return data;
         }
         public MyProfileVm MyProfile()
         {
-            var user = GetCurrentUser();
+            var user = (User)GetCurrentUser().Result;
             var data = Mapper.Map<MyProfileVm>(user);
             return data;
         }
@@ -137,7 +143,7 @@ namespace Business.BusinessLayer.BUser.Repository
             if (file != null)
             {
                 var guid = Guid.NewGuid().ToString();
-                var path = Path.Combine("Images", guid + file.FormFile.FileName);
+                var path = Path.Combine("C:\\Users\\USER\\source\\repos\\IRSystem\\RESProject101\\wwwroot\\", "Images", guid + file.FormFile.FileName);
                 using (var stream = new FileStream(path, FileMode.Create))
                 {
                     file.FormFile.CopyTo(stream);

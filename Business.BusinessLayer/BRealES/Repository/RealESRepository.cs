@@ -1,19 +1,13 @@
 ﻿using Business.BusinessLayer.BCommon.IRepository;
 using Business.BusinessLayer.BRealES.IRepository;
 using Business.BusinessLayer.BUser.IRepository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using AutoMapper;
-using Core.Services.Mapper;
 using Data.DataLayer;
 using Data.EntityModels;
 using Data.ViewModels.DataRESVM;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
+
 
 namespace Business.BusinessLayer.BRealES.Repository
 {
@@ -45,17 +39,18 @@ namespace Business.BusinessLayer.BRealES.Repository
         public bool Create(CreateVm createVm)
         {
             var realESid = Guid.NewGuid().ToString();
-
+            var usr  = _userRepository.GetCurrentUser().Result;
 
             var addressid = _iAddressRepository.Create(createVm, realESid);
 
             var roomId = _iRoomRepository.Create(createVm, realESid);
 
             RealEs realEs = _mapper.Map<RealEs>(createVm);
+            realEs.Room = roomId;
             realEs.Id = realESid;
-            realEs.RoomId = roomId;
+            realEs.RoomId = roomId.RoomId;
             realEs.AddressId = addressid;
-            realEs.UserId = _userRepository.GetCurrentUser().Id;
+            realEs.UserId = usr.Id;
             _db.RealEs.Add(realEs);
             _db.SaveChanges();
 
@@ -159,7 +154,8 @@ namespace Business.BusinessLayer.BRealES.Repository
 
         public List<FavVm> GetMyPropertiesByCurrentUser()
         {
-            var data = GetByUserId(_userRepository.GetCurrentUser().Id);
+            var usr = _userRepository.GetCurrentUser().Result;
+            var data = GetByUserId(usr.Id);
             var myProp = _mapper.Map<List<FavVm>>(data);
 
 

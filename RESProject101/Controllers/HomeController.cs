@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using Data.DataLayer;
 using Data.ViewModels.DataRESVM;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using RESProject101.Models;
 
@@ -21,7 +22,7 @@ namespace RESProject101.Controllers
 
         public IActionResult Index()
         {
-            var real  = _db.RealEs.Take(5).Include(x => x.Address)
+            var real  = _db.RealEs.Take(4).Include(x => x.Address)
               .ThenInclude(x => x.Country)
               .ThenInclude(x => x.Cities)
               .ThenInclude(x => x.Hoods)
@@ -70,6 +71,12 @@ namespace RESProject101.Controllers
                     Count = g.Count().ToString()
                 }).ToList(),
                 Categories = _db.Categories.Select(x => new SelectionFeatures { Id = x.Id, Name = x.Name, IsSelected = false }).ToList(),
+                Countries = _db.Countries.Select(x => new SelectListItem
+                {
+                    Text = x.Name,
+                    Value = x.Id.ToString()
+                }).ToList()
+
             };
 
             return View(data);

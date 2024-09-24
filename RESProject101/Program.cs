@@ -25,10 +25,13 @@ builder.Services.AddCors(options =>
     });
 });
 builder.Services.AddControllersWithViews();
+
 builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<MyDbContext>();
-builder.Services.AddDbContext<MyDbContext>(op => op.UseSqlServer(builder.Configuration.GetConnectionString("DBCS")));
+builder.Services.AddDbContext<MyDbContext>(op => op.UseSqlServer(builder.Configuration.GetConnectionString("DBCS")),
+    ServiceLifetime.Scoped);
+builder.Services.AddScoped<MyDbContext>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
-builder.Services.AddScoped<Business.BusinessLayer.BRealES.IRepository.IRealESRepository, RealEsRepository>();
+builder.Services.AddScoped< IRealESRepository, RealEsRepository>();
 builder.Services.AddScoped<IServicesRepository, ServicesRepository>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IRoomRepository, RoomRepository>();
@@ -67,7 +70,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 app.UseCors("AllowAll");
-
+app.UseAuthentication() ;
 app.UseAuthorization();
 
 app.MapControllerRoute(

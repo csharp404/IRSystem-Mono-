@@ -56,6 +56,7 @@ namespace RESProject101.Controllers
             return RedirectToAction("Favorites");
 
         }
+       
         [HttpGet]
         [Authorize]
         public IActionResult Create()

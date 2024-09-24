@@ -15,5 +15,6 @@ namespace Data.ViewModels.DataRESVM
         public string CountryFilter { get; set; }
         public string CityFilter { get; set; }
         public string HoodFilter { get; set; }
+        public List<SelectListItem> CountryList { get; set; }
     }
 }

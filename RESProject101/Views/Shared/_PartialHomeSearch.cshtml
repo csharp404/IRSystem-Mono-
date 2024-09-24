@@ -84,7 +84,7 @@
             var word = $(this).val(); // Get the selected country ID from the dropdown
             $("#list").empty();
             $.ajax({
-                url: "https://localhost:7091/Home/Search?word=" + word,
+                url: "/Home/Search?word=" + word,
                 type: "GET",
                 success: function (response) {
                   
@@ -109,7 +109,7 @@
             var loc = $(this).val(); // Get the selected country ID from the dropdown
             $("#country").empty();
             $.ajax({
-                url: "https://localhost:7091/Home/Location?word=" + loc,
+                url: "/Home/Location?word=" + loc,
                 type: "GET",
                 success: function (response) {
                    
